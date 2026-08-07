@@ -286,19 +286,38 @@ def get_EOF(sr, mr, mx0, my0):
         r1 = sr
         r2 = mr
     d = np.sqrt(abs(sx0-mx0)**2 + abs(sy0-my0)**2)
+#    if d<0.000220: 
+#        import ipdb; ipdb.set_trace()
     if d > (r1+r2)*1.05:
         of = 1
-    elif d <= (r1-r2):
-        of = 1 - ((np.pi * mr**2) / (np.pi * sr**2))
+#    elif d <= (r1-r2):
+#        of = 1 - ((np.pi * mr**2) / (np.pi * sr**2))
+#        import ipdb; ipdb.set_trace()
     else:
         d1 = (r1**2 - r2**2 + d**2) / (2*d)
         d2 = d - d1
         
         A = ( r1**2 * np.arccos(d1/r1) - (d1 * np.sqrt(r1**2 - d1**2)) ) + \
             ( r2**2 * np.arccos(d2/r2) - (d2 * np.sqrt(r2**2 - d2**2)) )
+#        A = ( r1**2 * np.arccos(d1/r1) - (d1 * np.sqrt(np.abs(r1**2 - d1**2))) ) + \
+#            ( r2**2 * np.arccos(d2/r2) - (d2 * np.sqrt(np.abs(r2**2 - d2**2))) )
+#        ### Temp Fix 
+#        if d1/r1>1 or d2/r2>1: 
+#            frac1=d1/r1; frac2=d2/r2
+#            if 1<frac1: frac1=1
+#            if 1<frac2: frac2=1
+#            A = ( r1**2 * np.arccos(frac1) - (d1 * np.sqrt(np.abs(r1**2 - d1**2))) ) + \
+#                ( r2**2 * np.arccos(frac2) - (d2 * np.sqrt(np.abs(r2**2 - d2**2))) )
+##            import ipdb; ipdb.set_trace()
+#            
 
         of = 1 - (A / (np.pi * sr**2)) if A > 0 else 1
+        if np.isnan(A) and d<=(r1-r2): of=0
+#        if of==1: 
+#            import ipdb; ipdb.set_trace()
     
+    print(d)
+
     return of
 
 #def eclipse_geo_novas(T, glon, glat, ghgt=0, srad_fact=1, plot=0):
