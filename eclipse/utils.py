@@ -292,7 +292,6 @@ def get_EOF(sr, mr, mx0, my0):
         of = 1
 #    elif d <= (r1-r2):
 #        of = 1 - ((np.pi * mr**2) / (np.pi * sr**2))
-#        import ipdb; ipdb.set_trace()
     else:
         d1 = (r1**2 - r2**2 + d**2) / (2*d)
         d2 = d - d1
@@ -312,13 +311,41 @@ def get_EOF(sr, mr, mx0, my0):
 #            
 
         of = 1 - (A / (np.pi * sr**2)) if A > 0 else 1
-        if np.isnan(A) and d<=(r1-r2): of=0
-#        if of==1: 
+#        if of==1 and d<=(r1-r2): 
 #            import ipdb; ipdb.set_trace()
+        if np.isnan(A) and d<=(r1-r2): of=0
+#        if np.isnan(A) and np.logical_or(r1**2+d1**2<0, r2**2-d2**2<0): of=0
+#        print(r1**2-d1**2)
     
 #    print(d)
 
     return of
+# Original Package Code: 
+#def get_EOF(sr, mr, mx0, my0):
+#    
+#    sx0 = 0
+#    sy0 = 0
+#    
+#    if mr > sr:
+#        r1 = mr
+#        r2 = sr
+#    else:
+#        r1 = sr
+#        r2 = mr
+#    d = np.sqrt(abs(sx0-mx0)**2 + abs(sy0-my0)**2)
+#    if d > (r1+r2)*1.05:
+#        of = 1
+#    elif d <= (r1-r2):
+#        of = 1 - ((np.pi * mr**2) / (np.pi * sr**2))
+#    else:
+#        d1 = (r1**2 - r2**2 + d**2) / (2*d)
+#        d2 = d - d1
+#        
+#        A = ( r1**2 * np.arccos(d1/r1) - (d1 * np.sqrt(r1**2 - d1**2)) ) + \
+#            ( r2**2 * np.arccos(d2/r2) - (d2 * np.sqrt(r2**2 - d2**2)) )
+#
+#        of = 1 - (A / (np.pi * sr**2)) if A > 0 else 1
+#    return of
 
 #def eclipse_geo_novas(T, glon, glat, ghgt=0, srad_fact=1, plot=0):
 #    assert isinstance(T, datetime)
