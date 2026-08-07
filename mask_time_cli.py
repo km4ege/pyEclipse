@@ -57,8 +57,13 @@ def main(startend=None, glon=None, glat=None, alt_km=100, odir=None,
     
     tlim = [parser.parse(startend[0]), parser.parse(startend[1])]
     ghgt = alt_km * 1000
+#    save_fn = os.path.join(odir, 
+#                           '{}lat_{}lon_{}_{}.nc'.format(glat,glon,
+#                                tlim[0].strftime("%Y%m%d%H%M%S"), 
+#                                tlim[1].strftime("%Y%m%d%H%M%S")), 
+#                           )
     save_fn = os.path.join(odir, 
-                           '{}lat_{}lon_{}_{}.nc'.format(glat,glon,
+                           '{}lat_{}lon_{}alt_{}_{}.nc'.format(glat,glon,alt_km,
                                 tlim[0].strftime("%Y%m%d%H%M%S"), 
                                 tlim[1].strftime("%Y%m%d%H%M%S")), 
                            )
