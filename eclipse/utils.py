@@ -316,7 +316,7 @@ def get_EOF(sr, mr, mx0, my0):
 #        if of==1: 
 #            import ipdb; ipdb.set_trace()
     
-    print(d)
+#    print(d)
 
     return of
 
